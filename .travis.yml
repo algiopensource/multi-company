@@ -1,5 +1,12 @@
+language: python
 sudo: false
-cache: pip
+cache:
+  apt: true
+  directories:
+    - $HOME/.cache/pip
+
+python:
+  - "2.7"
 
 addons:
   apt:
@@ -7,10 +14,6 @@ addons:
       - expect-dev  # provides unbuffer utility
       - python-lxml # because pip installation is slow
 
-language: python
-
-python:
-  - "2.7"
 
 env:
   global:
@@ -21,8 +24,10 @@ env:
   matrix:
   - LINT_CHECK="1"
   - TRANSIFEX="1"
-  - TESTS="1" ODOO_REPO="odoo/odoo"
-  - TESTS="1" ODOO_REPO="OCA/OCB"
+  - TESTS="1" ODOO_REPO="odoo/odoo" EXCLUDE="product_multi_company" LINT_CHECK="0"
+  - TESTS="1" ODOO_REPO="OCA/OCB" EXCLUDE="product_multi_company" LINT_CHECK="0"
+  - TESTS="1" ODOO_REPO="odoo/odoo" INCLUDE="product_multi_company" LINT_CHECK="0"
+  - TESTS="1" ODOO_REPO="OCA/OCB" INCLUDE="product_multi_company" LINT_CHECK="0"
 
 virtualenv:
   system_site_packages: true
